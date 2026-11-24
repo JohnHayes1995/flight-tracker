@@ -58,6 +58,7 @@ def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None
         currency=currency,
         language="en",
     )
+    fetch_cheapest.last_url = query.url()
     try:
         results = get_flights(query)
     except FlightsNotFound:
@@ -244,9 +245,30 @@ def run_checks(cfg, history, force=False):
                 errors.append(f"{label}: {err}")
                 print(f"  FAIL {label}: {err}")
                 continue
+            if result is None and not err:
+                # Google sometimes returns a page with no results; try once more.
+                time.sleep(random.uniform(*pause))
+                try:
+                    result = fetch_cheapest(
+                        s["legs"], "round-trip" if s["kind"] == "return" else "one-way",
+                        trip["passengers"], trip["seat"], cfg["currency"], max_minutes,
+                    )
+                except Exception:
+                    result = None
             if result is None:
                 empty += 1
                 print(f"  none {label}")
+                print(f"       check in a browser: {getattr(fetch_cheapest, 'last_url', '')}")
+                if max_minutes and empty == 1:
+                    try:
+                        test = fetch_cheapest(
+                            s["legs"], "round-trip" if s["kind"] == "return" else "one-way",
+                            trip["passengers"], trip["seat"], cfg["currency"], None,
+                        )
+                        print(f"       without the {trip['max_travel_hours']}h cap: "
+                              + (f"found {test['price']} ({test['airlines']}, {test['route']})" if test else "still none"))
+                    except Exception as e:
+                        print(f"       without the cap: error {type(e).__name__}")
                 continue
             ok += 1
             series = history["series"].setdefault(s["key"], {
