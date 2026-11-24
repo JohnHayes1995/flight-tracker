@@ -91,6 +91,9 @@ td.grid { padding: 2px; }
 .legend .l-good::before { background: var(--good); }
 .legend .l-high::before { background: var(--high); }
 .legend .l-google::before { height: 0; border-top: 2px dotted var(--muted); vertical-align: 3px; }
+.gf { color: var(--line); text-decoration: underline; text-underline-offset: 2px; }
+.gf:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 .empty { background: var(--surface); padding: 20px; color: var(--muted); border: 1px dashed var(--rule); }
 .note { color: var(--muted); font-size: 14px; margin-top: 8px; }
 details { margin-top: 56px; }
@@ -161,7 +164,7 @@ function renderTrip(t) {
   const freq = t.searches_per_run
     ? `${t.searches_per_run} of ${t.total_combos} fares checked each day, so each fare about every ${Math.round(t.total_combos / t.searches_per_run)} days`
     : `checked ${t.checks_per_day === 1 ? "daily" : t.checks_per_day + " times a day"}`;
-  const meta = `${t.passengers} ${t.passengers === 1 ? "passenger" : "passengers"}, economy, ${freq}${t.max_travel_hours ? `, max ${t.max_travel_hours} hours each way` : ""}. Last checked ${fmtWhen(t.last_checked)}.`;
+  const meta = `${t.passengers} ${t.passengers === 1 ? "passenger" : "passengers"}, economy, ${freq}${t.max_travel_hours ? `, max ${t.max_travel_hours} hours each way` : ""}${t.max_stops === 0 ? ", nonstop" : t.max_stops ? `, up to ${t.max_stops} stops` : ""}${t.latest_departure ? `, departing by ${t.latest_departure.replace(/^18:00$/, "6pm")}` : ""}. Last checked ${fmtWhen(t.last_checked)}.`;
   let body = "";
   if (!t.rows.length) body = '<p class="empty">No prices recorded yet.</p>';
   else if (t.id === "adl" || oneWay.length) body = renderLegs(t, oneWay, ret);
@@ -191,8 +194,9 @@ function renderLegs(t, oneWay, ret) {
       <td class="num">${fmtMoney(r.typical)}</td>
       <td>${STATUS[r.status]}</td>
       <td>${esc(r.latest?.airlines)}${r.latest?.depart ? `, ${esc(r.latest.depart)}` : ""}</td>
+      <td>${gfLink(r)}</td>
     </tr>`;
-  const head = `<thead><tr><th>Fare</th><th class="num">Now</th><th class="num">Lowest</th><th class="num">Typical</th><th>Status</th><th>Cheapest flight</th></tr></thead>`;
+  const head = `<thead><tr><th>Fare</th><th class="num">Now</th><th class="num">Lowest</th><th class="num">Typical</th><th>Status</th><th>Cheapest flight</th><th><span class="sr">Link</span></th></tr></thead>`;
 
   let compare = "";
   if (ret.length) {
@@ -206,7 +210,7 @@ function renderLegs(t, oneWay, ret) {
     }).join("");
     compare = `<h3>Return ticket or two one-ways?</h3>
       <div class="scroll"><table><thead><tr><th>Dates</th><th class="num">Return ticket</th><th class="num">Two one-ways</th><th class="num">Difference</th></tr></thead><tbody>${cells}</tbody></table></div>
-      <p class="note">${t.round_trip_ended ? "Return fares were tracked for the first two weeks and have now stopped." : "Return fares are tracked for the first two weeks only, to confirm they cost the same as two one-ways."}</p>`;
+      ${t.round_trip_ended ? `<p class="note">Return fares are no longer being tracked.</p>` : ""}`;
   }
   return `${best}
     <h3>One-way fares, all ${t.passengers} passengers</h3>
@@ -235,6 +239,7 @@ function renderGrid(t, ret) {
     ${legend()}`;
 }
 
+const gfLink = r => r.link ? `<a class="gf" href="${esc(r.link)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">View on Google Flights</a>` : "";
 const statusClass = r => r.status === "lowest" ? "s-lowest" : r.status === "good" ? "s-good" : r.status === "high" ? "s-high" : "";
 const legend = () => `<div class="legend"><span class="l-lowest">Lowest price seen</span><span class="l-good">Good price, cheapest ${10}% of checks</span><span class="l-high">Above typical</span></div>`;
 
@@ -257,6 +262,7 @@ function renderChart(t, r) {
   const last = pts[pts.length - 1];
   document.getElementById("chart-" + t.id).innerHTML = `<div class="chart" role="region" aria-label="Price history">
     <h4>${esc(title)}</h4>
+    ${r.link ? `<p><a class="gf" href="${esc(r.link)}" target="_blank" rel="noopener">View this search on Google Flights</a>, to see both legs and book.</p>` : ""}
     <p>${r.checks} ${r.checks === 1 ? "check" : "checks"} over ${r.tracking_days} days${r.google_days ? `, plus ${r.google_days} days of Google’s history` : ""}. Now ${fmtMoney(r.current)}, lowest ${fmtMoney(r.lowest)} on ${fmtDate(r.lowest_ts)}, typical ${fmtMoney(r.typical)}.${r.latest?.route ? ` Cheapest flight: ${esc(r.latest.airlines)}, ${esc(r.latest.route)}.` : ""}</p>
     <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Line chart of price over time">
       ${ticks}${days}

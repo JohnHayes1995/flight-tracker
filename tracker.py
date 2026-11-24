@@ -39,13 +39,13 @@ MAX_RUN_LOG = 300
 # To switch to a paid API later, replace the body of this one function so it
 # returns the same dict shape. History and dashboard code don't change.
 
-def build_query(legs, trip_type, passengers, seat, currency, max_minutes=None, max_stops=None):
+def build_query(legs, trip_type, passengers, seat, currency, max_minutes=None, max_stops=None, latest_hour=None):
     from fast_flights import FlightQuery, Passengers, create_query
 
     return create_query(
         flights=[
             FlightQuery(date=d, from_airport=a, to_airport=b, max_duration_minutes=max_minutes,
-                        max_stops=max_stops)
+                        max_stops=max_stops, latest_departure_hour=latest_hour)
             for a, b, d in legs
         ],
         trip=trip_type,
@@ -56,7 +56,7 @@ def build_query(legs, trip_type, passengers, seat, currency, max_minutes=None, m
     )
 
 
-def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None, max_stops=None):
+def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None, max_stops=None, latest_hour=None):
     """Return the cheapest itinerary for a search, or None if nothing found.
 
     legs: list of (from_airport, to_airport, "YYYY-MM-DD")
@@ -64,7 +64,7 @@ def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None
     from fast_flights import get_flights
     from fast_flights.exceptions import FlightsNotFound
 
-    query = build_query(legs, trip_type, passengers, seat, currency, max_minutes, max_stops)
+    query = build_query(legs, trip_type, passengers, seat, currency, max_minutes, max_stops, latest_hour)
     fetch_cheapest.last_url = query.url()
     try:
         results = get_flights(query)
@@ -72,7 +72,9 @@ def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None
         return None
 
     priced = [r for r in results if isinstance(r.price, (int, float)) and r.price > 0
-              and (max_stops is None or len(r.flights) - 1 <= max_stops)]
+              and (max_stops is None or len(r.flights) - 1 <= max_stops)
+              and (latest_hour is None or not r.flights
+                   or tuple(r.flights[0].departure.time) <= (latest_hour, 0))]
     if not priced:
         return None
     best = min(priced, key=lambda r: r.price)
@@ -88,6 +90,24 @@ def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None
         "flying_minutes": sum(s.duration or 0 for s in segs),
         "options_seen": len(priced),
     }
+
+
+def latest_hour(trip):
+    t = trip.get("latest_departure")  # "HH:MM"
+    return int(t.split(":")[0]) if t else None
+
+
+def google_link(trip, cfg, s):
+    legs = [(s["from"], s["to"], s["date"])]
+    if s.get("return_date"):
+        legs.append((s["to"], s["from"], s["return_date"]))
+    cap = int(trip["max_travel_hours"] * 60) if trip.get("max_travel_hours") else None
+    try:
+        return build_query(legs, "round-trip" if s["kind"] == "return" else "one-way",
+                           trip["passengers"], trip["seat"], cfg["currency"], cap,
+                           trip.get("max_stops"), latest_hour(trip)).url()
+    except Exception:
+        return None
 
 
 # ---------------------------------------------------------------- searches
@@ -273,7 +293,7 @@ def run_checks(cfg, history, force=False):
                     r["route"] = "–".join([s["from"]] + ([r["route"]] if r["route"] else []) + [s["to"]])
                 return r
             return fetch_cheapest(s["legs"], trip_type, trip["passengers"], trip["seat"],
-                                  cfg["currency"], cap, trip.get("max_stops"))
+                                  cfg["currency"], cap, trip.get("max_stops"), latest_hour(trip))
 
         for i, s in enumerate(searches):
             if i:
@@ -350,6 +370,7 @@ def build_dashboard(cfg, history):
                 "date": s["date"], "return_date": s.get("return_date"),
                 "stay_label": s.get("stay_label"),
                 "points": [[o["ts"], o["price"]] for o in s["obs"]],
+                "link": google_link(trip, cfg, s),
                 "google_points": [[f"{d}T12:00:00+00:00", p] for d, p in s.get("google_history", [])],
                 **analyse(s, cfg, now),
             })
@@ -359,6 +380,8 @@ def build_dashboard(cfg, history):
             "origin": (trip.get("one_way") or [trip.get("round_trip", {})])[0].get("from"),
             "checks_per_day": trip["checks_per_day"],
             "searches_per_run": trip.get("searches_per_run"),
+            "max_stops": trip.get("max_stops"),
+            "latest_departure": trip.get("latest_departure"),
             "total_combos": len(build_searches(trip, history, now)),
             "max_travel_hours": trip.get("max_travel_hours"),
             "last_checked": history["last_checked"].get(trip["id"]),

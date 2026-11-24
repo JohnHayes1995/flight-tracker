@@ -13,6 +13,7 @@
       "seat": "economy",
       "checks_per_day": 3,
       "max_stops": 0,
+      "latest_departure": "18:00",
       "one_way": [
         {"from": "PER", "to": "ADL", "dates": ["2027-03-17", "2027-03-18"]},
         {"from": "ADL", "to": "PER", "dates": ["2027-03-21", "2027-03-22"]}
@@ -21,8 +22,7 @@
         "from": "PER",
         "to": "ADL",
         "outbound_dates": ["2027-03-17", "2027-03-18"],
-        "return_dates": ["2027-03-21", "2027-03-22"],
-        "stop_after_days": 14
+        "return_dates": ["2027-03-21", "2027-03-22"]
       }
     },
     {
