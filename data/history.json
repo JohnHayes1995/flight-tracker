@@ -1,5 +1,90 @@
 {
- "series": {},
+ "series": {
+  "adl|ow|PER-ADL|2027-03-17": {
+   "trip": "adl",
+   "kind": "one-way",
+   "from": "PER",
+   "to": "ADL",
+   "date": "2027-03-17",
+   "return_date": null,
+   "stay_label": null,
+   "obs": [
+    {
+     "ts": "2026-11-24T12:41:33.979790+00:00",
+     "price": 957,
+     "airlines": "Qantas",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "05:15",
+     "flying_minutes": 170,
+     "options_seen": 4
+    }
+   ]
+  },
+  "adl|ow|PER-ADL|2027-03-18": {
+   "trip": "adl",
+   "kind": "one-way",
+   "from": "PER",
+   "to": "ADL",
+   "date": "2027-03-18",
+   "return_date": null,
+   "stay_label": null,
+   "obs": [
+    {
+     "ts": "2026-11-24T12:41:33.979790+00:00",
+     "price": 811,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "11:45",
+     "flying_minutes": 170,
+     "options_seen": 5
+    }
+   ]
+  },
+  "adl|ow|ADL-PER|2027-03-22": {
+   "trip": "adl",
+   "kind": "one-way",
+   "from": "ADL",
+   "to": "PER",
+   "date": "2027-03-22",
+   "return_date": null,
+   "stay_label": null,
+   "obs": [
+    {
+     "ts": "2026-11-24T12:41:33.979790+00:00",
+     "price": 957,
+     "airlines": "Qantas",
+     "stops": 0,
+     "route": "ADL–PER",
+     "depart": "06:25",
+     "flying_minutes": 200,
+     "options_seen": 4
+    }
+   ]
+  },
+  "adl|rt|PER-ADL|2027-03-17|2027-03-21": {
+   "trip": "adl",
+   "kind": "return",
+   "from": "PER",
+   "to": "ADL",
+   "date": "2027-03-17",
+   "return_date": "2027-03-21",
+   "stay_label": null,
+   "obs": [
+    {
+     "ts": "2026-11-24T12:41:33.979790+00:00",
+     "price": 1584,
+     "airlines": "Qantas",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "05:15",
+     "flying_minutes": 170,
+     "options_seen": 6
+    }
+   ]
+  }
+ },
  "runs": [
   {
    "ts": "2026-11-24T12:37:00.414026+00:00",
@@ -15,9 +100,20 @@
     "ADL-PER 2027-03-22: ModuleNotFoundError: No module named 'typing_extensions'",
     "Stopped early: the first 4 searches all failed."
    ]
+  },
+  {
+   "ts": "2026-11-24T12:41:33.979790+00:00",
+   "trip": "adl",
+   "searches": 8,
+   "ok": 4,
+   "empty": 4,
+   "failed": 0,
+   "errors": []
   }
  ],
- "last_checked": {},
+ "last_checked": {
+  "adl": "2026-11-24T12:41:33.979790+00:00"
+ },
  "trip_started": {
   "adl": "2026-11-24T12:37:00.414026+00:00"
  }
