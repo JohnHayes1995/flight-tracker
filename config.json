@@ -30,7 +30,7 @@
       "passengers": 1,
       "seat": "economy",
       "checks_per_day": 1,
-      "max_travel_hours": 40,
+      "max_travel_hours": 36,
       "method": "serpapi",
       "max_stops": 2,
       "monthly_search_budget": 240,
