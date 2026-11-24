@@ -2,14 +2,14 @@ name: Check flight prices
 
 on:
   schedule:
-    # Times are UTC. These are 6:23am, 12:23pm and 6:23pm in Perth.
-    - cron: "23 22,4,10 * * *"
+    # Wake hourly; the tracker decides which trips are due.
+    - cron: "17 * * * *"
   workflow_dispatch:
     inputs:
       force:
         description: "Check every trip now, ignoring the schedule"
         type: boolean
-        default: true
+        default: false
 
 permissions:
   contents: write
