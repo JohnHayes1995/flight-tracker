@@ -1,1 +1,24 @@
-{"series": {}, "runs": [], "last_checked": {}, "trip_started": {}}
+{
+ "series": {},
+ "runs": [
+  {
+   "ts": "2026-11-24T12:37:00.414026+00:00",
+   "trip": "adl",
+   "searches": 8,
+   "ok": 0,
+   "empty": 0,
+   "failed": 8,
+   "errors": [
+    "PER-ADL 2027-03-17: ModuleNotFoundError: No module named 'typing_extensions'",
+    "PER-ADL 2027-03-18: ModuleNotFoundError: No module named 'typing_extensions'",
+    "ADL-PER 2027-03-21: ModuleNotFoundError: No module named 'typing_extensions'",
+    "ADL-PER 2027-03-22: ModuleNotFoundError: No module named 'typing_extensions'",
+    "Stopped early: the first 4 searches all failed."
+   ]
+  }
+ ],
+ "last_checked": {},
+ "trip_started": {
+  "adl": "2026-11-24T12:37:00.414026+00:00"
+ }
+}
