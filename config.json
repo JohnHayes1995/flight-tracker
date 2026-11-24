@@ -1,0 +1,44 @@
+{
+  "currency": "AUD",
+  "timezone": "Australia/Perth",
+  "warmup_days": 14,
+  "min_observations": 8,
+  "good_price_percentile": 10,
+  "pause_between_searches_seconds": [4, 10],
+  "trips": [
+    {
+      "id": "adl",
+      "name": "Perth to Adelaide",
+      "passengers": 3,
+      "seat": "economy",
+      "checks_per_day": 3,
+      "one_way": [
+        {"from": "PER", "to": "ADL", "dates": ["2027-03-17", "2027-03-18"]},
+        {"from": "ADL", "to": "PER", "dates": ["2027-03-21", "2027-03-22"]}
+      ],
+      "round_trip": {
+        "from": "PER",
+        "to": "ADL",
+        "outbound_dates": ["2027-03-17", "2027-03-18"],
+        "return_dates": ["2027-03-21", "2027-03-22"],
+        "stop_after_days": 14
+      }
+    },
+    {
+      "id": "bog",
+      "name": "Bogotá to Perth",
+      "passengers": 1,
+      "seat": "economy",
+      "checks_per_day": 1,
+      "max_travel_hours": 40,
+      "round_trip": {
+        "from": "BOG",
+        "to": "PER",
+        "outbound_range": ["2027-01-18", "2027-02-27"],
+        "every_days": 3,
+        "return_after_days": [29, 36],
+        "return_labels": ["4 weeks", "5 weeks"]
+      }
+    }
+  ]
+}

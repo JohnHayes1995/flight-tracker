@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fare watch</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #eef1f4;
+  --surface: #ffffff;
+  --ink: #1b232c;
+  --muted: #5b6672;
+  --rule: #d3dae1;
+  --lowest: #f5c400;
+  --lowest-ink: #1b232c;
+  --good: #fbe7a1;
+  --high: #e4e8ec;
+  --line: #2f5f8a;
+  --focus: #2f5f8a;
+  --sans: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --cond: "Barlow Semi Condensed", "Arial Narrow", "Segoe UI", sans-serif;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --bg: #12171d;
+    --surface: #1a2129;
+    --ink: #e6eaee;
+    --muted: #97a2ad;
+    --rule: #2c3640;
+    --lowest: #f5c400;
+    --lowest-ink: #12171d;
+    --good: #4a3f12;
+    --high: #222a33;
+    --line: #7fb2e0;
+    --focus: #7fb2e0;
+  }
+}
+*, *::before, *::after { box-sizing: inherit; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 16px/1.5 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+main { max-width: 1040px; margin: 0 auto; padding: 32px 20px 64px; }
+h1, h2, h3 { font-family: var(--cond); font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+.headline { font-size: clamp(28px, 5vw, 44px); line-height: 1.1; max-width: 22ch; }
+.lede { color: var(--muted); margin: 10px 0 0; max-width: 60ch; }
+.trip { margin-top: 48px; }
+.trip-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px; border-bottom: 2px solid var(--ink); padding-bottom: 8px; }
+.trip-head h2 { font-size: 28px; }
+.meta { color: var(--muted); font-size: 14px; }
+.best { display: flex; flex-wrap: wrap; gap: 8px 40px; margin: 20px 0 8px; }
+.best .price { font-family: var(--cond); font-weight: 700; font-size: 40px; line-height: 1; }
+.best .what { color: var(--muted); font-size: 14px; margin-top: 4px; }
+h3 { font-size: 18px; margin: 28px 0 10px; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; background: var(--surface); }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--rule); white-space: nowrap; font-variant-numeric: tabular-nums; }
+th { font-weight: 500; font-size: 14px; color: var(--muted); }
+td.num, th.num { text-align: right; }
+tr.pick { cursor: pointer; }
+tr.pick:hover td { background: color-mix(in srgb, var(--line) 6%, transparent); }
+tr.pick.on td { background: color-mix(in srgb, var(--line) 12%, transparent); }
+tr.pick:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.cell { display: block; width: 100%; font: inherit; color: inherit; border: 0; padding: 8px 10px; text-align: right; cursor: pointer; background: transparent; font-variant-numeric: tabular-nums; }
+.cell:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.cell.on { box-shadow: inset 0 0 0 2px var(--line); }
+td.grid { padding: 2px; }
+.s-lowest { background: var(--lowest) !important; color: var(--lowest-ink); font-weight: 600; }
+.s-good { background: var(--good) !important; }
+.s-high { background: var(--high) !important; color: var(--muted); }
+.tag { font-size: 13px; padding: 2px 8px; border-radius: 2px; }
+.chart { background: var(--surface); border: 1px solid var(--rule); margin-top: 16px; padding: 16px; }
+.chart h4 { margin: 0 0 4px; font: 600 16px var(--cond); }
+.chart p { margin: 0 0 8px; color: var(--muted); font-size: 14px; }
+.chart svg { width: 100%; height: auto; display: block; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 20px; font-size: 13px; color: var(--muted); margin-top: 10px; }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; }
+.legend .l-lowest::before { background: var(--lowest); }
+.legend .l-good::before { background: var(--good); }
+.legend .l-high::before { background: var(--high); }
+.empty { background: var(--surface); padding: 20px; color: var(--muted); border: 1px dashed var(--rule); }
+.note { color: var(--muted); font-size: 14px; margin-top: 8px; }
+details { margin-top: 56px; }
+summary { cursor: pointer; font: 600 18px var(--cond); }
+.fail { color: #b3261e; }
+@media (prefers-color-scheme: dark) { .fail { color: #ff8a80; } }
+@media (prefers-reduced-motion: no-preference) {
+  .chart { animation: open .18s ease-out; }
+  @keyframes open { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const DATA = {"generated": "2026-11-24T12:13:10.621459+00:00", "currency": "AUD", "timezone": "Australia/Perth", "warmup_days": 14, "trips": [{"id": "adl", "name": "Perth to Adelaide", "passengers": 3, "checks_per_day": 3, "max_travel_hours": null, "last_checked": null, "round_trip_ended": false, "rows": []}, {"id": "bog", "name": "Bogotá to Perth", "passengers": 1, "checks_per_day": 1, "max_travel_hours": 40, "last_checked": null, "round_trip_ended": false, "rows": []}], "runs": []};
+
+const fmtMoney = n => n == null ? "–" : new Intl.NumberFormat("en-AU", { style: "currency", currency: DATA.currency, maximumFractionDigits: 0 }).format(n);
+const tz = DATA.timezone;
+const fmtDay = iso => new Date(iso + "T12:00:00Z").toLocaleDateString("en-AU", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" });
+const fmtWhen = iso => iso ? new Date(iso).toLocaleString("en-AU", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit", timeZone: tz }) : "never";
+const fmtDate = iso => new Date(iso).toLocaleDateString("en-AU", { day: "numeric", month: "long", timeZone: tz });
+const STATUS = { lowest: "Lowest yet", good: "Good price", normal: "Typical", high: "Above typical", warming: "Collecting", "no-data": "No data" };
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const flagged = r => r.status === "lowest" || r.status === "good";
+
+const selected = {};
+const app = document.getElementById("app");
+
+function render() {
+  if (!DATA) { app.innerHTML = '<p class="empty">No data yet.</p>'; return; }
+  const all = DATA.trips.flatMap(t => t.rows);
+  const deals = all.filter(flagged);
+  const warming = all.length && all.every(r => r.status === "warming");
+  const firstFlag = all.map(r => r.flags_from).filter(Boolean).sort()[0];
+
+  let headline, lede;
+  if (!all.length) {
+    headline = "Waiting for the first price check.";
+    lede = "Prices appear here after the first scheduled run.";
+  } else if (deals.length) {
+    const n = deals.filter(r => r.status === "lowest").length;
+    headline = n ? `${n} ${n === 1 ? "fare is" : "fares are"} at the lowest price seen.` : `${deals.length} ${deals.length === 1 ? "fare is" : "fares are"} a good price right now.`;
+    lede = "Highlighted fares are worth booking. Prices can change between checks, so confirm on Google Flights before you pay.";
+  } else if (warming) {
+    headline = "Still collecting prices.";
+    lede = `Fares are flagged once there are ${DATA.warmup_days} days of history, from about ${fmtDate(firstFlag)}.`;
+  } else {
+    headline = "No fares worth booking yet.";
+    lede = "Every fare is at or above its usual price. This page updates after each check.";
+  }
+
+  app.innerHTML = `
+    <h1 class="headline">${esc(headline)}</h1>
+    <p class="lede">${esc(lede)} Last updated ${fmtWhen(DATA.generated)}, Perth time.</p>
+    ${DATA.trips.map(renderTrip).join("")}
+    ${renderRuns()}`;
+  bind();
+}
+
+function bestOf(rows) {
+  return rows.filter(r => r.current != null).sort((a, b) => a.current - b.current)[0];
+}
+
+function renderTrip(t) {
+  const oneWay = t.rows.filter(r => r.kind === "one-way");
+  const ret = t.rows.filter(r => r.kind === "return");
+  const meta = `${t.passengers} ${t.passengers === 1 ? "passenger" : "passengers"}, economy, checked ${t.checks_per_day === 1 ? "daily" : t.checks_per_day + " times a day"}${t.max_travel_hours ? `, max ${t.max_travel_hours} hours each way` : ""}. Last checked ${fmtWhen(t.last_checked)}.`;
+  let body = "";
+  if (!t.rows.length) body = '<p class="empty">No prices recorded yet.</p>';
+  else if (t.id === "adl" || oneWay.length) body = renderLegs(t, oneWay, ret);
+  else body = renderGrid(t, ret);
+  return `<section class="trip" id="${t.id}">
+    <div class="trip-head"><h2>${esc(t.name)}</h2><span class="meta">${esc(meta)}</span></div>
+    ${body}
+    <div id="chart-${t.id}"></div>
+  </section>`;
+}
+
+function renderLegs(t, oneWay, ret) {
+  const out = oneWay.filter(r => r.from === oneWay[0]?.from);
+  const back = oneWay.filter(r => r.from !== oneWay[0]?.from);
+  const bo = bestOf(out), bb = bestOf(back);
+  const combo = bo && bb ? bo.current + bb.current : null;
+  const bestRet = bestOf(ret);
+  let best = `<div class="best">`;
+  if (combo != null) best += `<div><div class="price">${fmtMoney(combo)}</div><div class="what">Cheapest as two one-ways: out ${fmtDay(bo.date)}, back ${fmtDay(bb.date)}</div></div>`;
+  if (bestRet) best += `<div><div class="price">${fmtMoney(bestRet.current)}</div><div class="what">Cheapest return ticket: ${fmtDay(bestRet.date)} to ${fmtDay(bestRet.return_date)}</div></div>`;
+  best += `</div>`;
+
+  const row = r => `<tr class="pick ${statusClass(r)}" tabindex="0" data-trip="${t.id}" data-key="${esc(r.key)}">
+      <td>${r.kind === "return" ? `${fmtDay(r.date)} to ${fmtDay(r.return_date)}` : `${r.from} to ${r.to}, ${fmtDay(r.date)}`}</td>
+      <td class="num">${fmtMoney(r.current)}</td>
+      <td class="num">${fmtMoney(r.lowest)}</td>
+      <td class="num">${fmtMoney(r.typical)}</td>
+      <td>${STATUS[r.status]}</td>
+      <td>${esc(r.latest?.airlines)}${r.latest?.depart ? `, ${esc(r.latest.depart)}` : ""}</td>
+    </tr>`;
+  const head = `<thead><tr><th>Fare</th><th class="num">Now</th><th class="num">Lowest</th><th class="num">Typical</th><th>Status</th><th>Cheapest flight</th></tr></thead>`;
+
+  let compare = "";
+  if (ret.length) {
+    const cells = ret.map(r => {
+      const o = oneWay.find(x => x.from === r.from && x.date === r.date);
+      const b = oneWay.find(x => x.from === r.to && x.date === r.return_date);
+      const sum = o?.current != null && b?.current != null ? o.current + b.current : null;
+      const diff = sum != null && r.current != null ? r.current - sum : null;
+      return `<tr><td>${fmtDay(r.date)} to ${fmtDay(r.return_date)}</td><td class="num">${fmtMoney(r.current)}</td><td class="num">${fmtMoney(sum)}</td>
+        <td class="num">${diff == null ? "–" : diff === 0 ? "Same" : diff < 0 ? `Return ${fmtMoney(-diff)} cheaper` : `One-ways ${fmtMoney(diff)} cheaper`}</td></tr>`;
+    }).join("");
+    compare = `<h3>Return ticket or two one-ways?</h3>
+      <div class="scroll"><table><thead><tr><th>Dates</th><th class="num">Return ticket</th><th class="num">Two one-ways</th><th class="num">Difference</th></tr></thead><tbody>${cells}</tbody></table></div>
+      <p class="note">${t.round_trip_ended ? "Return fares were tracked for the first two weeks and have now stopped." : "Return fares are tracked for the first two weeks only, to confirm they cost the same as two one-ways."}</p>`;
+  }
+  return `${best}
+    <h3>One-way fares, all ${t.passengers} passengers</h3>
+    <div class="scroll"><table>${head}<tbody>${oneWay.map(row).join("")}</tbody></table></div>
+    ${ret.length ? `<h3>Return fares</h3><div class="scroll"><table>${head}<tbody>${ret.map(row).join("")}</tbody></table></div>` : ""}
+    ${compare}
+    ${legend()}`;
+}
+
+function renderGrid(t, ret) {
+  const labels = [...new Set(ret.map(r => r.stay_label))];
+  const dates = [...new Set(ret.map(r => r.date))].sort();
+  const b = bestOf(ret);
+  const best = b ? `<div class="best"><div><div class="price">${fmtMoney(b.current)}</div>
+    <div class="what">Cheapest now: leave Bogotá ${fmtDay(b.date)}, return ${fmtDay(b.return_date)} (${esc(b.stay_label)})</div></div>
+    <div><div class="price">${esc(b.latest?.airlines || "–")}</div><div class="what">${esc(b.latest?.route || "")}${b.latest?.stops != null ? `, ${b.latest.stops} stops` : ""}</div></div></div>` : "";
+  const body = dates.map(d => `<tr><td>${fmtDay(d)}</td>${labels.map(l => {
+      const r = ret.find(x => x.date === d && x.stay_label === l);
+      if (!r) return `<td class="num">–</td>`;
+      return `<td class="grid"><button class="cell ${statusClass(r)}" data-trip="${t.id}" data-key="${esc(r.key)}" aria-label="${fmtDay(d)}, ${esc(l)}: ${fmtMoney(r.current)}, ${STATUS[r.status]}">${fmtMoney(r.current)}</button></td>`;
+    }).join("")}</tr>`).join("");
+  return `${best}
+    <h3>Return fares by departure date</h3>
+    <div class="scroll"><table><thead><tr><th>Leave Bogotá</th>${labels.map(l => `<th class="num">Stay ${esc(l)}</th>`).join("")}</tr></thead><tbody>${body}</tbody></table></div>
+    <p class="note">Select a fare to see its price history. Stay length counts from arrival in Perth, about a day after leaving Bogotá.</p>
+    ${legend()}`;
+}
+
+const statusClass = r => r.status === "lowest" ? "s-lowest" : r.status === "good" ? "s-good" : r.status === "high" ? "s-high" : "";
+const legend = () => `<div class="legend"><span class="l-lowest">Lowest price seen</span><span class="l-good">Good price, cheapest ${10}% of checks</span><span class="l-high">Above typical</span></div>`;
+
+function renderChart(t, r) {
+  const pts = r.points.map(([ts, p]) => [new Date(ts).getTime(), p]);
+  const W = 720, H = 220, L = 64, R = 12, T = 12, B = 28;
+  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+  const x0 = Math.min(...xs), x1 = Math.max(...xs, x0 + 3600e3);
+  let y0 = Math.min(...ys), y1 = Math.max(...ys);
+  const pad = Math.max((y1 - y0) * 0.15, y1 * 0.03, 10); y0 -= pad; y1 += pad;
+  const X = v => L + (v - x0) / (x1 - x0) * (W - L - R);
+  const Y = v => T + (1 - (v - y0) / (y1 - y0)) * (H - T - B);
+  const path = pts.map((p, i) => `${i ? "L" : "M"}${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}`).join("");
+  const ticks = [y0 + pad, (y0 + y1) / 2, y1 - pad].map(v => `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--rule)"/><text x="${L - 8}" y="${Y(v) + 4}" text-anchor="end" font-size="12" fill="var(--muted)">${fmtMoney(v)}</text>`).join("");
+  const days = [x0, (x0 + x1) / 2, x1].map((v, i) => `<text x="${X(v)}" y="${H - 6}" text-anchor="${["start", "middle", "end"][i]}" font-size="12" fill="var(--muted)">${new Date(v).toLocaleDateString("en-AU", { day: "numeric", month: "short", timeZone: tz })}</text>`).join("");
+  const lowY = Y(r.lowest);
+  const title = r.kind === "return" ? `${fmtDay(r.date)} to ${fmtDay(r.return_date)}${r.stay_label ? ` (${r.stay_label})` : ""}` : `${r.from} to ${r.to}, ${fmtDay(r.date)}`;
+  const last = pts[pts.length - 1];
+  document.getElementById("chart-" + t.id).innerHTML = `<div class="chart" role="region" aria-label="Price history">
+    <h4>${esc(title)}</h4>
+    <p>${r.checks} checks over ${r.tracking_days} days. Now ${fmtMoney(r.current)}, lowest ${fmtMoney(r.lowest)} on ${fmtDate(r.lowest_ts)}, typical ${fmtMoney(r.typical)}.${r.latest?.route ? ` Cheapest flight: ${esc(r.latest.airlines)}, ${esc(r.latest.route)}.` : ""}</p>
+    <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Line chart of price over time">
+      ${ticks}${days}
+      <line x1="${L}" x2="${W - R}" y1="${lowY}" y2="${lowY}" stroke="var(--lowest)" stroke-width="2" stroke-dasharray="6 4"/>
+      <path d="${path}" fill="none" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="${X(last[0])}" cy="${Y(last[1])}" r="4" fill="var(--line)"/>
+    </svg>
+    <div class="legend"><span class="l-lowest">Lowest price seen</span></div>
+  </div>`;
+}
+
+function renderRuns() {
+  if (!DATA.runs.length) return "";
+  const name = id => DATA.trips.find(t => t.id === id)?.name ?? id;
+  const rows = DATA.runs.map(r => `<tr><td>${fmtWhen(r.ts)}</td><td>${esc(name(r.trip))}</td><td class="num">${r.ok} of ${r.searches}</td>
+    <td class="${r.failed ? "fail" : ""}">${r.failed ? `${r.failed} failed: ${esc(r.errors[0] || "")}` : r.empty ? `${r.empty} with no flights` : "All found"}</td></tr>`).join("");
+  const recent = DATA.runs.slice(0, 6);
+  const blocked = recent.length >= 3 && recent.every(r => r.failed === r.searches);
+  return `<details ${blocked ? "open" : ""}><summary>Check log</summary>
+    ${blocked ? `<p class="fail">The last few checks all failed. Google may be blocking the scraper; switching to a paid data source would fix this.</p>` : ""}
+    <div class="scroll"><table><thead><tr><th>When</th><th>Trip</th><th class="num">Prices found</th><th>Result</th></tr></thead><tbody>${rows}</tbody></table></div></details>`;
+}
+
+function bind() {
+  app.querySelectorAll("[data-key]").forEach(el => {
+    const open = () => {
+      const t = DATA.trips.find(x => x.id === el.dataset.trip);
+      const r = t.rows.find(x => x.key === el.dataset.key);
+      app.querySelectorAll(`[data-trip="${t.id}"]`).forEach(e => e.classList.remove("on"));
+      el.classList.add("on");
+      selected[t.id] = r.key;
+      renderChart(t, r);
+    };
+    el.addEventListener("click", open);
+    el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+  });
+  for (const t of DATA.trips) {
+    const r = t.rows.find(x => x.key === selected[t.id]) || bestOf(t.rows);
+    const el = r && app.querySelector(`[data-trip="${t.id}"][data-key="${CSS.escape(r.key)}"]`);
+    if (el) { el.classList.add("on"); renderChart(t, r); }
+  }
+}
+
+render();
+</script>
+</body>
+</html>
