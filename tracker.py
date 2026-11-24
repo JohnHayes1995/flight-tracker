@@ -61,34 +61,31 @@ def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None
 
     legs: list of (from_airport, to_airport, "YYYY-MM-DD")
     """
-    from fast_flights import get_flights
-    from fast_flights.exceptions import FlightsNotFound
+    from fast_flights.fetcher import fetch_flights_html
+    from gflights_parse import parse_all
 
     query = build_query(legs, trip_type, passengers, seat, currency, max_minutes, max_stops, latest_hour)
     fetch_cheapest.last_url = query.url()
-    try:
-        results = get_flights(query)
-    except FlightsNotFound:
-        return None
+    flights, err = parse_all(fetch_flights_html(query))
+    if err:
+        raise RuntimeError(err)
 
-    priced = [r for r in results if isinstance(r.price, (int, float)) and r.price > 0
-              and (max_stops is None or len(r.flights) - 1 <= max_stops)
-              and (latest_hour is None or not r.flights
-                   or tuple(r.flights[0].departure.time) <= (latest_hour, 0))]
-    if not priced:
+    ok = [f for f in flights
+          if (max_stops is None or len(f["segments"]) - 1 <= max_stops)
+          and (latest_hour is None or f["segments"][0]["dep"] <= (latest_hour, 0))]
+    if not ok:
         return None
-    best = min(priced, key=lambda r: r.price)
-    segs = best.flights
-    route = [segs[0].from_airport.code] + [s.to_airport.code for s in segs] if segs else []
-    dep = segs[0].departure.time if segs else None
+    best = min(ok, key=lambda f: f["price"])
+    segs = best["segments"]
+    dep = segs[0]["dep"]
     return {
-        "price": int(best.price),
-        "airlines": ", ".join(best.airlines) if best.airlines else "",
-        "stops": max(len(segs) - 1, 0),
-        "route": "–".join(route),
-        "depart": f"{dep[0]:02d}:{dep[1]:02d}" if dep else "",
-        "flying_minutes": sum(s.duration or 0 for s in segs),
-        "options_seen": len(priced),
+        "price": int(best["price"]),
+        "airlines": ", ".join(best["airlines"]),
+        "stops": len(segs) - 1,
+        "route": "–".join([segs[0]["from"]] + [x["to"] for x in segs]),
+        "depart": f"{dep[0]:02d}:{dep[1]:02d}",
+        "flying_minutes": sum(x["duration"] for x in segs),
+        "options_seen": len(ok),
     }
 
 
