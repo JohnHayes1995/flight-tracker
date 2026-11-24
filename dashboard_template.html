@@ -164,7 +164,7 @@ function renderTrip(t) {
   const freq = t.searches_per_run
     ? `${t.searches_per_run} of ${t.total_combos} fares checked each day, so each fare about every ${Math.round(t.total_combos / t.searches_per_run)} days`
     : `checked ${t.checks_per_day === 1 ? "daily" : t.checks_per_day + " times a day"}`;
-  const meta = `${t.passengers} ${t.passengers === 1 ? "passenger" : "passengers"}, economy, ${freq}${t.max_travel_hours ? `, max ${t.max_travel_hours} hours each way` : ""}${t.max_stops === 0 ? ", nonstop" : t.max_stops ? `, up to ${t.max_stops} stops` : ""}${t.latest_departure ? `, departing by ${t.latest_departure.replace(/^18:00$/, "6pm")}` : ""}. Last checked ${fmtWhen(t.last_checked)}.`;
+  const meta = `${t.passengers} ${t.passengers === 1 ? "passenger" : "passengers"}, economy, ${freq}${t.max_travel_hours ? `, max ${t.max_travel_hours} hours each way` : ""}${t.max_stops === 0 ? ", nonstop" : t.max_stops ? `, up to ${t.max_stops} stops` : ""}${t.latest_departure ? `, departing by ${t.latest_departure.replace(/^(\d+):00$/, (m, h) => (h % 12 || 12) + (h >= 12 ? "pm" : "am"))}` : ""}. Last checked ${fmtWhen(t.last_checked)}.`;
   let body = "";
   if (!t.rows.length) body = '<p class="empty">No prices recorded yet.</p>';
   else if (t.id === "adl" || oneWay.length) body = renderLegs(t, oneWay, ret);
