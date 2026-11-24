@@ -246,9 +246,9 @@ def run_checks(cfg, history, force=False):
         for i, s in enumerate(searches):
             if i:
                 time.sleep(random.uniform(*pause))
-            if i >= 4 and failed == i:
-                errors.append("Stopped early: the first 4 searches all failed.")
-                print("  first 4 searches all failed; skipping the rest of this trip")
+            if i >= 4 and ok == 0:
+                errors.append("Stopped early: the first 4 searches found nothing.")
+                print("  first 4 searches found nothing; skipping the rest of this trip")
                 failed = len(searches) - ok - empty
                 break
             result, err = None, None

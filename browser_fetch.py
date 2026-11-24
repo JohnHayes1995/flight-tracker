@@ -22,7 +22,6 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 # "From 4416 Australian dollars round trip total. 3 stops flight with
 #  LATAM and Qantas. Leaves ... Total duration 34 hr. ..."
 RESULT_SELECTOR = '[aria-label*="Australian dollars"]'
-NO_RESULTS_TEXT = ("No results returned", "no flights", "No options matching")
 
 PRICE_RE = re.compile(r"From ([\d,]+) Australian dollars")
 AIRLINE_RE = re.compile(r"flight with (.+?)\.")
@@ -73,11 +72,9 @@ class BrowserFetcher:
                 page.wait_for_selector(RESULT_SELECTOR, state="attached", timeout=40_000)
                 page.wait_for_timeout(2500)  # let the rest of the list fill in
             except Exception:
-                body = page.inner_text("body")[:5000]
-                if any(t.lower() in body.lower() for t in NO_RESULTS_TEXT):
-                    return None
                 self._save_debug(page, label)
-                raise RuntimeError("results never appeared (screenshot saved to debug/)")
+                title = (page.title() or "")[:60]
+                raise RuntimeError(f"results never appeared; page title '{title}' (screenshot saved)")
 
             labels = page.eval_on_selector_all(
                 RESULT_SELECTOR, "els => els.map(e => e.getAttribute('aria-label'))"
