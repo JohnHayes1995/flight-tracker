@@ -48,6 +48,16 @@
      "depart": "05:15",
      "flying_minutes": 170,
      "options_seen": 4
+    },
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 957,
+     "airlines": "Qantas",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "05:15",
+     "flying_minutes": 170,
+     "options_seen": 4
     }
    ]
   },
@@ -150,6 +160,16 @@
      "depart": "06:25",
      "flying_minutes": 200,
      "options_seen": 4
+    },
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 957,
+     "airlines": "Qantas",
+     "stops": 0,
+     "route": "ADL–PER",
+     "depart": "06:25",
+     "flying_minutes": 200,
+     "options_seen": 4
     }
    ]
   },
@@ -174,6 +194,16 @@
     },
     {
      "ts": "2026-11-24T13:09:16.417013+00:00",
+     "price": 1584,
+     "airlines": "Qantas",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "05:15",
+     "flying_minutes": 170,
+     "options_seen": 6
+    },
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
      "price": 1584,
      "airlines": "Qantas",
      "stops": 0,
@@ -222,6 +252,16 @@
      "depart": "05:15",
      "flying_minutes": 170,
      "options_seen": 6
+    },
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 1584,
+     "airlines": "Qantas",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "05:15",
+     "flying_minutes": 170,
+     "options_seen": 6
     }
    ]
   },
@@ -256,6 +296,16 @@
     },
     {
      "ts": "2026-11-24T13:09:16.417013+00:00",
+     "price": 1440,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "11:45",
+     "flying_minutes": 170,
+     "options_seen": 6
+    },
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
      "price": 1440,
      "airlines": "Jetstar",
      "stops": 0,
@@ -325,6 +375,650 @@
      "depart": "13:20",
      "flying_minutes": 200,
      "options_seen": 4
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-01-18|2027-02-16": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-01-18",
+   "return_date": "2027-02-16",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5960,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–SYD–PER",
+     "depart": "23:10",
+     "flying_minutes": 2015,
+     "options_seen": 8,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-01-18|2027-02-23": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-01-18",
+   "return_date": "2027-02-23",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5905,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–SYD–PER",
+     "depart": "23:10",
+     "flying_minutes": 2015,
+     "options_seen": 8,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-01-21|2027-02-19": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-01-21",
+   "return_date": "2027-02-19",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5680,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 5,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-01-21|2027-02-26": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-01-21",
+   "return_date": "2027-02-26",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5680,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 3,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-01-24|2027-02-22": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-01-24",
+   "return_date": "2027-02-22",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 7028,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 3,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-01-24|2027-03-01": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-01-24",
+   "return_date": "2027-03-01",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5442,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 3,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-01-27|2027-02-25": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-01-27",
+   "return_date": "2027-02-25",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5220,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 4,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-01-27|2027-03-04": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-01-27",
+   "return_date": "2027-03-04",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5220,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 8,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-01-30|2027-02-28": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-01-30",
+   "return_date": "2027-02-28",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5442,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 6,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-01-30|2027-03-07": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-01-30",
+   "return_date": "2027-03-07",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5015,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 6,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-02|2027-03-03": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-02",
+   "return_date": "2027-03-03",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5015,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 5,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-02|2027-03-10": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-02",
+   "return_date": "2027-03-10",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5015,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 5,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-05|2027-03-06": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-05",
+   "return_date": "2027-03-06",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5015,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 4,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-05|2027-03-13": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-05",
+   "return_date": "2027-03-13",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 4850,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 4,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-08|2027-03-09": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-08",
+   "return_date": "2027-03-09",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 3558,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–MEL–PER",
+     "depart": "13:15",
+     "flying_minutes": 1885,
+     "options_seen": 2,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-08|2027-03-16": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-08",
+   "return_date": "2027-03-16",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 4748,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–SYD–PER",
+     "depart": "13:15",
+     "flying_minutes": 2055,
+     "options_seen": 5,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-11|2027-03-12": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-11",
+   "return_date": "2027-03-12",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 4850,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 6,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-11|2027-03-19": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-11",
+   "return_date": "2027-03-19",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5220,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 3,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-14|2027-03-15": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-14",
+   "return_date": "2027-03-15",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5015,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 3,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-14|2027-03-22": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-14",
+   "return_date": "2027-03-22",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 4552,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–MEL–PER",
+     "depart": "13:15",
+     "flying_minutes": 1860,
+     "options_seen": 1,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-17|2027-03-18": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-17",
+   "return_date": "2027-03-18",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 4718,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–SYD–PER",
+     "depart": "23:10",
+     "flying_minutes": 2015,
+     "options_seen": 8,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-17|2027-03-25": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-17",
+   "return_date": "2027-03-25",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 4541,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–MEL–PER",
+     "depart": "13:15",
+     "flying_minutes": 1905,
+     "options_seen": 8,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-20|2027-03-21": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-20",
+   "return_date": "2027-03-21",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 5220,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 6,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-20|2027-03-28": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-20",
+   "return_date": "2027-03-28",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 4850,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 7,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-23|2027-03-24": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-23",
+   "return_date": "2027-03-24",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 4783,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–SYD–PER",
+     "depart": "23:10",
+     "flying_minutes": 2015,
+     "options_seen": 4,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-23|2027-03-31": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-23",
+   "return_date": "2027-03-31",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 4850,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 3,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-26|2027-03-27": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-26",
+   "return_date": "2027-03-27",
+   "stay_label": "4 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 3586,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–MEL–PER",
+     "depart": "13:15",
+     "flying_minutes": 1900,
+     "options_seen": 2,
+     "google_level": null,
+     "google_typical": null
+    }
+   ]
+  },
+  "bog|rt|BOG-PER|2027-02-26|2027-04-03": {
+   "trip": "bog",
+   "kind": "return",
+   "from": "BOG",
+   "to": "PER",
+   "date": "2027-02-26",
+   "return_date": "2027-04-03",
+   "stay_label": "5 weeks",
+   "obs": [
+    {
+     "ts": "2026-11-24T13:48:54.930944+00:00",
+     "price": 4850,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 4,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   }
@@ -397,13 +1091,35 @@
     "BOG-PER 2027-01-21 / 2027-02-26: RuntimeError: results never appeared; page title 'Bogotá to Perth | Google Flights' (screenshot saved)",
     "Stopped early: the first 4 searches found nothing."
    ]
+  },
+  {
+   "ts": "2026-11-24T13:48:54.930944+00:00",
+   "trip": "adl",
+   "searches": 8,
+   "ok": 5,
+   "empty": 3,
+   "failed": 0,
+   "errors": []
+  },
+  {
+   "ts": "2026-11-24T13:48:54.930944+00:00",
+   "trip": "bog",
+   "searches": 28,
+   "ok": 28,
+   "empty": 0,
+   "failed": 0,
+   "errors": []
   }
  ],
  "last_checked": {
-  "adl": "2026-11-24T13:09:16.417013+00:00"
+  "adl": "2026-11-24T13:48:54.930944+00:00",
+  "bog": "2026-11-24T13:48:54.930944+00:00"
  },
  "trip_started": {
   "adl": "2026-11-24T12:37:00.414026+00:00",
   "bog": "2026-11-24T13:09:16.417013+00:00"
+ },
+ "api_usage": {
+  "2026-11": 28
  }
 }
