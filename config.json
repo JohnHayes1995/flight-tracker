@@ -31,7 +31,9 @@
       "seat": "economy",
       "checks_per_day": 1,
       "max_travel_hours": 40,
-      "method": "browser",
+      "method": "serpapi",
+      "max_stops": 2,
+      "monthly_search_budget": 240,
       "round_trip": {
         "from": "BOG",
         "to": "PER",

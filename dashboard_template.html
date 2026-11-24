@@ -90,6 +90,7 @@ td.grid { padding: 2px; }
 .legend .l-lowest::before { background: var(--lowest); }
 .legend .l-good::before { background: var(--good); }
 .legend .l-high::before { background: var(--high); }
+.legend .l-google::before { height: 0; border-top: 2px dotted var(--muted); vertical-align: 3px; }
 .empty { background: var(--surface); padding: 20px; color: var(--muted); border: 1px dashed var(--rule); }
 .note { color: var(--muted); font-size: 14px; margin-top: 8px; }
 details { margin-top: 56px; }
@@ -157,7 +158,10 @@ function bestOf(rows) {
 function renderTrip(t) {
   const oneWay = t.rows.filter(r => r.kind === "one-way");
   const ret = t.rows.filter(r => r.kind === "return");
-  const meta = `${t.passengers} ${t.passengers === 1 ? "passenger" : "passengers"}, economy, checked ${t.checks_per_day === 1 ? "daily" : t.checks_per_day + " times a day"}${t.max_travel_hours ? `, max ${t.max_travel_hours} hours each way` : ""}. Last checked ${fmtWhen(t.last_checked)}.`;
+  const freq = t.searches_per_run
+    ? `${t.searches_per_run} of ${t.total_combos} fares checked each day, so each fare about every ${Math.round(t.total_combos / t.searches_per_run)} days`
+    : `checked ${t.checks_per_day === 1 ? "daily" : t.checks_per_day + " times a day"}`;
+  const meta = `${t.passengers} ${t.passengers === 1 ? "passenger" : "passengers"}, economy, ${freq}${t.max_travel_hours ? `, max ${t.max_travel_hours} hours each way` : ""}. Last checked ${fmtWhen(t.last_checked)}.`;
   let body = "";
   if (!t.rows.length) body = '<p class="empty">No prices recorded yet.</p>';
   else if (t.id === "adl" || oneWay.length) body = renderLegs(t, oneWay, ret);
@@ -236,14 +240,16 @@ const legend = () => `<div class="legend"><span class="l-lowest">Lowest price se
 
 function renderChart(t, r) {
   const pts = r.points.map(([ts, p]) => [new Date(ts).getTime(), p]);
+  const gpts = (r.google_points || []).map(([ts, p]) => [new Date(ts).getTime(), p]);
   const W = 720, H = 220, L = 64, R = 12, T = 12, B = 28;
-  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+  const xs = pts.concat(gpts).map(p => p[0]), ys = pts.concat(gpts).map(p => p[1]);
   const x0 = Math.min(...xs), x1 = Math.max(...xs, x0 + 3600e3);
   let y0 = Math.min(...ys), y1 = Math.max(...ys);
   const pad = Math.max((y1 - y0) * 0.15, y1 * 0.03, 10); y0 -= pad; y1 += pad;
   const X = v => L + (v - x0) / (x1 - x0) * (W - L - R);
   const Y = v => T + (1 - (v - y0) / (y1 - y0)) * (H - T - B);
-  const path = pts.map((p, i) => `${i ? "L" : "M"}${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}`).join("");
+  const line = arr => arr.map((p, i) => `${i ? "L" : "M"}${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}`).join("");
+  const path = line(pts), gpath = gpts.length ? line(gpts) : "";
   const ticks = [y0 + pad, (y0 + y1) / 2, y1 - pad].map(v => `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--rule)"/><text x="${L - 8}" y="${Y(v) + 4}" text-anchor="end" font-size="12" fill="var(--muted)">${fmtMoney(v)}</text>`).join("");
   const days = [x0, (x0 + x1) / 2, x1].map((v, i) => `<text x="${X(v)}" y="${H - 6}" text-anchor="${["start", "middle", "end"][i]}" font-size="12" fill="var(--muted)">${new Date(v).toLocaleDateString("en-AU", { day: "numeric", month: "short", timeZone: tz })}</text>`).join("");
   const lowY = Y(r.lowest);
@@ -251,14 +257,16 @@ function renderChart(t, r) {
   const last = pts[pts.length - 1];
   document.getElementById("chart-" + t.id).innerHTML = `<div class="chart" role="region" aria-label="Price history">
     <h4>${esc(title)}</h4>
-    <p>${r.checks} checks over ${r.tracking_days} days. Now ${fmtMoney(r.current)}, lowest ${fmtMoney(r.lowest)} on ${fmtDate(r.lowest_ts)}, typical ${fmtMoney(r.typical)}.${r.latest?.route ? ` Cheapest flight: ${esc(r.latest.airlines)}, ${esc(r.latest.route)}.` : ""}</p>
+    <p>${r.checks} ${r.checks === 1 ? "check" : "checks"} over ${r.tracking_days} days${r.google_days ? `, plus ${r.google_days} days of Google’s history` : ""}. Now ${fmtMoney(r.current)}, lowest ${fmtMoney(r.lowest)} on ${fmtDate(r.lowest_ts)}, typical ${fmtMoney(r.typical)}.${r.latest?.route ? ` Cheapest flight: ${esc(r.latest.airlines)}, ${esc(r.latest.route)}.` : ""}</p>
     <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Line chart of price over time">
       ${ticks}${days}
       <line x1="${L}" x2="${W - R}" y1="${lowY}" y2="${lowY}" stroke="var(--lowest)" stroke-width="2" stroke-dasharray="6 4"/>
+      ${gpath ? `<path d="${gpath}" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="2 3"/>` : ""}
       <path d="${path}" fill="none" stroke="var(--line)" stroke-width="2" stroke-linejoin="round"/>
+      ${pts.length < 3 ? pts.map(p => `<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="3" fill="var(--line)"/>`).join("") : ""}
       <circle cx="${X(last[0])}" cy="${Y(last[1])}" r="4" fill="var(--line)"/>
     </svg>
-    <div class="legend"><span class="l-lowest">Lowest price seen</span></div>
+    <div class="legend"><span class="l-lowest">Lowest price seen</span>${gpts.length ? `<span class="l-google">Google’s price history</span>` : ""}</div>
   </div>`;
 }
 

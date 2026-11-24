@@ -159,14 +159,18 @@ def percentile(values, pct):
 
 def analyse(series, cfg, now):
     obs = series["obs"]
-    prices = [o["price"] for o in obs]
-    if not prices:
+    if not obs:
         return {"status": "no-data"}
-    first = datetime.fromisoformat(obs[0]["ts"])
+    # Our own checks, plus Google's price history for days we didn't check.
+    own_days = {o["ts"][:10] for o in obs}
+    google = [(f"{d}T12:00:00+00:00", p) for d, p in series.get("google_history", []) if d not in own_days]
+    points = sorted([(o["ts"], o["price"]) for o in obs] + google)
+    prices = [p for _, p in points]
+    first = datetime.fromisoformat(points[0][0])
     days = (now - first).total_seconds() / 86400
     warm = days >= cfg["warmup_days"] and len(prices) >= cfg["min_observations"]
-    current = prices[-1]
-    prior = prices[:-1]
+    current = obs[-1]["price"]
+    prior = [p for ts, p in points if ts != obs[-1]["ts"]]
     low = min(prices)
     typical = statistics.median(prices)
     good = percentile(prices, cfg["good_price_percentile"])
@@ -186,7 +190,8 @@ def analyse(series, cfg, now):
         "status": status,
         "current": current,
         "lowest": low,
-        "lowest_ts": next(o["ts"] for o in obs if o["price"] == low),
+        "lowest_ts": next(ts for ts, p in points if p == low),
+        "google_days": len(google),
         "typical": round(typical),
         "good_below": round(good) if good is not None else None,
         "checks": len(prices),
@@ -221,9 +226,27 @@ def run_checks(cfg, history, force=False):
             continue
         history["trip_started"].setdefault(trip["id"], now.isoformat())
         searches = build_searches(trip, history, now)
+        total_combos = len(searches)
+        per_run = trip.get("searches_per_run")
+        if per_run:
+            # Rotate: check the fares that have gone longest without a check.
+            def last_seen(x):
+                obs = history["series"].get(x["key"], {}).get("obs", [])
+                return obs[-1]["ts"] if obs else ""
+            searches = sorted(searches, key=last_seen)[:per_run]
+        budget = trip.get("monthly_search_budget")
+        if budget:
+            month = now.strftime("%Y-%m")
+            used = history.setdefault("api_usage", {}).get(month, 0)
+            if used >= budget:
+                print(f"[{trip['id']}] monthly budget of {budget} searches used; skipping")
+                history["runs"].append({"ts": now.isoformat(), "trip": trip["id"], "searches": 0,
+                    "ok": 0, "empty": 0, "failed": 0, "errors": [f"Monthly limit of {budget} searches reached"]})
+                continue
+            searches = searches[:budget - used]
         ok, empty, failed, errors = 0, 0, 0, []
         max_minutes = int(trip["max_travel_hours"] * 60) if trip.get("max_travel_hours") else None
-        print(f"[{trip['id']}] {len(searches)} searches")
+        print(f"[{trip['id']}] {len(searches)} searches" + (f" (rotating through {total_combos})" if per_run else ""))
 
         browser = None
         if trip.get("method") == "browser":
@@ -232,6 +255,13 @@ def run_checks(cfg, history, force=False):
 
         def search_once(s, cap):
             trip_type = "round-trip" if s["kind"] == "return" else "one-way"
+            if trip.get("method") == "serpapi":
+                import serpapi_fetch
+                if budget:
+                    usage = history.setdefault("api_usage", {})
+                    usage[now.strftime("%Y-%m")] = usage.get(now.strftime("%Y-%m"), 0) + 1
+                return serpapi_fetch.fetch(s["legs"], s["kind"], trip["passengers"], cfg["currency"], cap,
+                                          trip.get("max_stops"))
             if browser:
                 url = build_query(s["legs"], trip_type, trip["passengers"], trip["seat"],
                                   cfg["currency"], cap).url()
@@ -260,7 +290,7 @@ def run_checks(cfg, history, force=False):
                 except Exception as e:  # network errors, blocks, parser changes
                     err = f"{type(e).__name__}: {str(e)[:160]}"
                     time.sleep(10)
-            if result is None and not err and not browser:
+            if result is None and not err and not browser and trip.get("method") != "serpapi":
                 # Google sometimes returns a page with no results; try once more.
                 time.sleep(random.uniform(*pause))
                 try:
@@ -282,6 +312,14 @@ def run_checks(cfg, history, force=False):
             series = history["series"].setdefault(s["key"], {
                 k: s.get(k) for k in ("trip", "kind", "from", "to", "date", "return_date", "stay_label")
             } | {"obs": []})
+            google = result.pop("_google_history", None)
+            if google:
+                merged = dict(series.get("google_history", []))
+                for ts, price in google:
+                    if isinstance(ts, (int, float)) and isinstance(price, (int, float)):
+                        day = datetime.fromtimestamp(ts, timezone.utc).strftime("%Y-%m-%d")
+                        merged[day] = int(price)
+                series["google_history"] = sorted(merged.items())
             series["obs"].append({"ts": now.isoformat(), **result})
             print(f"  {result['price']:>6} {label} ({result['airlines']})")
 
@@ -310,6 +348,7 @@ def build_dashboard(cfg, history):
                 "date": s["date"], "return_date": s.get("return_date"),
                 "stay_label": s.get("stay_label"),
                 "points": [[o["ts"], o["price"]] for o in s["obs"]],
+                "google_points": [[f"{d}T12:00:00+00:00", p] for d, p in s.get("google_history", [])],
                 **analyse(s, cfg, now),
             })
         rows.sort(key=lambda r: (r["kind"], r["from"], r["date"], r["return_date"] or ""))
@@ -317,6 +356,8 @@ def build_dashboard(cfg, history):
             "id": trip["id"], "name": trip["name"], "passengers": trip["passengers"],
             "origin": (trip.get("one_way") or [trip.get("round_trip", {})])[0].get("from"),
             "checks_per_day": trip["checks_per_day"],
+            "searches_per_run": trip.get("searches_per_run"),
+            "total_combos": len(build_searches(trip, history, now)),
             "max_travel_hours": trip.get("max_travel_hours"),
             "last_checked": history["last_checked"].get(trip["id"]),
             "round_trip_ended": round_trip_expired(trip, history, now),
