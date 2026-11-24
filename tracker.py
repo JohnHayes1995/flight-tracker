@@ -221,8 +221,13 @@ def run_checks(cfg, history, force=False):
         for i, s in enumerate(searches):
             if i:
                 time.sleep(random.uniform(*pause))
+            if i >= 4 and failed == i:
+                errors.append("Stopped early: the first 4 searches all failed.")
+                print("  first 4 searches all failed; skipping the rest of this trip")
+                failed = len(searches) - ok - empty
+                break
             result, err = None, None
-            for attempt in range(3):
+            for attempt in range(2):
                 try:
                     result = fetch_cheapest(
                         s["legs"], "round-trip" if s["kind"] == "return" else "one-way",
@@ -232,7 +237,7 @@ def run_checks(cfg, history, force=False):
                     break
                 except Exception as e:  # network errors, blocks, parser changes
                     err = f"{type(e).__name__}: {str(e)[:160]}"
-                    time.sleep(15 * (attempt + 1))
+                    time.sleep(10)
             label = f"{s['from']}-{s['to']} {s['date']}" + (f" / {s['return_date']}" if s["return_date"] else "")
             if err:
                 failed += 1
@@ -256,6 +261,7 @@ def run_checks(cfg, history, force=False):
         })
         if ok:
             history["last_checked"][trip["id"]] = now.isoformat()
+        save_history(history)
     return now
 
 
@@ -298,6 +304,7 @@ def build_dashboard(cfg, history):
 
 
 def main():
+    sys.stdout.reconfigure(line_buffering=True)  # show log lines live in GitHub Actions
     p = argparse.ArgumentParser()
     p.add_argument("--force", action="store_true", help="check every trip now")
     p.add_argument("--build", action="store_true", help="rebuild dashboard only")
