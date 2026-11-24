@@ -31,13 +31,13 @@ jobs:
           cache: pip
 
       - name: Install
-        run: |
-          pip install -r requirements.txt
-          python -m playwright install --with-deps chromium
+        run: pip install -r requirements.txt
 
       - name: Check prices
         id: run
         continue-on-error: true
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAAPI_KEY }}
         run: python tracker.py ${{ (github.event_name == 'workflow_dispatch' && inputs.force) && '--force' || '' }}
 
       - name: Save results
@@ -49,15 +49,6 @@ jobs:
           git diff --cached --quiet || git commit -m "Price check $(date -u +%Y-%m-%dT%H:%MZ)"
           git pull --rebase --autostash
           git push
-
-      - name: Keep screenshots of failed searches
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: debug-screenshots
-          path: debug/
-          if-no-files-found: ignore
-          retention-days: 7
 
       - name: Report scraper failure
         if: steps.run.outcome == 'failure'
