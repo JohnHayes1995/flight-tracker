@@ -18,6 +18,16 @@
      "depart": "05:15",
      "flying_minutes": 170,
      "options_seen": 4
+    },
+    {
+     "ts": "2026-11-24T12:48:29.355882+00:00",
+     "price": 957,
+     "airlines": "Qantas",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "05:15",
+     "flying_minutes": 170,
+     "options_seen": 4
     }
    ]
   },
@@ -39,6 +49,16 @@
      "depart": "11:45",
      "flying_minutes": 170,
      "options_seen": 5
+    },
+    {
+     "ts": "2026-11-24T12:48:29.355882+00:00",
+     "price": 811,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "11:45",
+     "flying_minutes": 170,
+     "options_seen": 5
     }
    ]
   },
@@ -53,6 +73,16 @@
    "obs": [
     {
      "ts": "2026-11-24T12:41:33.979790+00:00",
+     "price": 957,
+     "airlines": "Qantas",
+     "stops": 0,
+     "route": "ADL–PER",
+     "depart": "06:25",
+     "flying_minutes": 200,
+     "options_seen": 4
+    },
+    {
+     "ts": "2026-11-24T12:48:29.355882+00:00",
      "price": 957,
      "airlines": "Qantas",
      "stops": 0,
@@ -83,6 +113,69 @@
      "options_seen": 6
     }
    ]
+  },
+  "adl|rt|PER-ADL|2027-03-17|2027-03-22": {
+   "trip": "adl",
+   "kind": "return",
+   "from": "PER",
+   "to": "ADL",
+   "date": "2027-03-17",
+   "return_date": "2027-03-22",
+   "stay_label": null,
+   "obs": [
+    {
+     "ts": "2026-11-24T12:48:29.355882+00:00",
+     "price": 1584,
+     "airlines": "Qantas",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "05:15",
+     "flying_minutes": 170,
+     "options_seen": 6
+    }
+   ]
+  },
+  "adl|rt|PER-ADL|2027-03-18|2027-03-21": {
+   "trip": "adl",
+   "kind": "return",
+   "from": "PER",
+   "to": "ADL",
+   "date": "2027-03-18",
+   "return_date": "2027-03-21",
+   "stay_label": null,
+   "obs": [
+    {
+     "ts": "2026-11-24T12:48:29.355882+00:00",
+     "price": 1440,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "11:45",
+     "flying_minutes": 170,
+     "options_seen": 6
+    }
+   ]
+  },
+  "adl|rt|PER-ADL|2027-03-18|2027-03-22": {
+   "trip": "adl",
+   "kind": "return",
+   "from": "PER",
+   "to": "ADL",
+   "date": "2027-03-18",
+   "return_date": "2027-03-22",
+   "stay_label": null,
+   "obs": [
+    {
+     "ts": "2026-11-24T12:48:29.355882+00:00",
+     "price": 1440,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "11:45",
+     "flying_minutes": 170,
+     "options_seen": 6
+    }
+   ]
   }
  },
  "runs": [
@@ -109,10 +202,21 @@
    "empty": 4,
    "failed": 0,
    "errors": []
+  },
+  {
+   "ts": "2026-11-24T12:48:29.355882+00:00",
+   "trip": "adl",
+   "searches": 8,
+   "ok": 6,
+   "empty": 1,
+   "failed": 1,
+   "errors": [
+    "PER-ADL 2027-03-17 / 2027-03-21: AttributeError: 'NoneType' object has no attribute 'text'"
+   ]
   }
  ],
  "last_checked": {
-  "adl": "2026-11-24T12:41:33.979790+00:00"
+  "adl": "2026-11-24T12:48:29.355882+00:00"
  },
  "trip_started": {
   "adl": "2026-11-24T12:37:00.414026+00:00"
