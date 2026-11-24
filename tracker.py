@@ -39,12 +39,13 @@ MAX_RUN_LOG = 300
 # To switch to a paid API later, replace the body of this one function so it
 # returns the same dict shape. History and dashboard code don't change.
 
-def build_query(legs, trip_type, passengers, seat, currency, max_minutes=None):
+def build_query(legs, trip_type, passengers, seat, currency, max_minutes=None, max_stops=None):
     from fast_flights import FlightQuery, Passengers, create_query
 
     return create_query(
         flights=[
-            FlightQuery(date=d, from_airport=a, to_airport=b, max_duration_minutes=max_minutes)
+            FlightQuery(date=d, from_airport=a, to_airport=b, max_duration_minutes=max_minutes,
+                        max_stops=max_stops)
             for a, b, d in legs
         ],
         trip=trip_type,
@@ -55,7 +56,7 @@ def build_query(legs, trip_type, passengers, seat, currency, max_minutes=None):
     )
 
 
-def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None):
+def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None, max_stops=None):
     """Return the cheapest itinerary for a search, or None if nothing found.
 
     legs: list of (from_airport, to_airport, "YYYY-MM-DD")
@@ -63,14 +64,15 @@ def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None
     from fast_flights import get_flights
     from fast_flights.exceptions import FlightsNotFound
 
-    query = build_query(legs, trip_type, passengers, seat, currency, max_minutes)
+    query = build_query(legs, trip_type, passengers, seat, currency, max_minutes, max_stops)
     fetch_cheapest.last_url = query.url()
     try:
         results = get_flights(query)
     except FlightsNotFound:
         return None
 
-    priced = [r for r in results if isinstance(r.price, (int, float)) and r.price > 0]
+    priced = [r for r in results if isinstance(r.price, (int, float)) and r.price > 0
+              and (max_stops is None or len(r.flights) - 1 <= max_stops)]
     if not priced:
         return None
     best = min(priced, key=lambda r: r.price)
@@ -271,7 +273,7 @@ def run_checks(cfg, history, force=False):
                     r["route"] = "–".join([s["from"]] + ([r["route"]] if r["route"] else []) + [s["to"]])
                 return r
             return fetch_cheapest(s["legs"], trip_type, trip["passengers"], trip["seat"],
-                                  cfg["currency"], cap)
+                                  cfg["currency"], cap, trip.get("max_stops"))
 
         for i, s in enumerate(searches):
             if i:
