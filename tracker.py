@@ -160,12 +160,30 @@ def round_trip_expired(trip, history, now):
     return now - datetime.fromisoformat(first) > timedelta(days=limit)
 
 
-def trip_is_due(trip, history, now):
+def trip_is_due(trip, history, now, tz="Australia/Perth"):
+    """Due if the trip hasn't been checked since its most recent check time.
+
+    check_times are local times like "06:00". The workflow wakes the tracker
+    hourly, so a run GitHub skips is caught up by the next one.
+    """
     last = history.get("last_checked", {}).get(trip["id"])
     if not last:
         return True
-    gap_hours = 24 / trip["checks_per_day"] * 0.6
-    return now - datetime.fromisoformat(last) >= timedelta(hours=gap_hours)
+    last = datetime.fromisoformat(last)
+    times = trip.get("check_times")
+    if not times:
+        gap_hours = 24 / trip["checks_per_day"] * 0.6
+        return now - last >= timedelta(hours=gap_hours)
+    local_now = now.astimezone(ZoneInfo(tz))
+    slots = []
+    for day in (local_now.date() - timedelta(days=1), local_now.date()):
+        for t in times:
+            h, m = (int(x) for x in t.split(":"))
+            slot = datetime(day.year, day.month, day.day, h, m, tzinfo=ZoneInfo(tz))
+            if slot <= local_now:
+                slots.append(slot)
+    latest_slot = max(slots)
+    return last < latest_slot
 
 
 # ---------------------------------------------------------------- analysis
@@ -243,7 +261,7 @@ def run_checks(cfg, history, force=False):
     now = datetime.now(timezone.utc)
     pause = cfg.get("pause_between_searches_seconds", [4, 10])
     for trip in cfg["trips"]:
-        if not force and not trip_is_due(trip, history, now):
+        if not force and not trip_is_due(trip, history, now, cfg.get("timezone", "Australia/Perth")):
             print(f"[{trip['id']}] not due yet, skipping")
             continue
         history["trip_started"].setdefault(trip["id"], now.isoformat())

@@ -12,6 +12,7 @@
       "passengers": 3,
       "seat": "economy",
       "checks_per_day": 3,
+      "check_times": ["06:00", "12:00", "18:00"],
       "max_stops": 0,
       "latest_departure": "18:00",
       "one_way": [
@@ -31,6 +32,7 @@
       "passengers": 1,
       "seat": "economy",
       "checks_per_day": 1,
+      "check_times": ["12:00"],
       "max_travel_hours": 36,
       "method": "serpapi",
       "max_stops": 2,
