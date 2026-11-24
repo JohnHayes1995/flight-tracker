@@ -39,15 +39,10 @@ MAX_RUN_LOG = 300
 # To switch to a paid API later, replace the body of this one function so it
 # returns the same dict shape. History and dashboard code don't change.
 
-def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None):
-    """Return the cheapest itinerary for a search, or None if nothing found.
+def build_query(legs, trip_type, passengers, seat, currency, max_minutes=None):
+    from fast_flights import FlightQuery, Passengers, create_query
 
-    legs: list of (from_airport, to_airport, "YYYY-MM-DD")
-    """
-    from fast_flights import FlightQuery, Passengers, create_query, get_flights
-    from fast_flights.exceptions import FlightsNotFound
-
-    query = create_query(
+    return create_query(
         flights=[
             FlightQuery(date=d, from_airport=a, to_airport=b, max_duration_minutes=max_minutes)
             for a, b, d in legs
@@ -58,6 +53,17 @@ def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None
         currency=currency,
         language="en",
     )
+
+
+def fetch_cheapest(legs, trip_type, passengers, seat, currency, max_minutes=None):
+    """Return the cheapest itinerary for a search, or None if nothing found.
+
+    legs: list of (from_airport, to_airport, "YYYY-MM-DD")
+    """
+    from fast_flights import get_flights
+    from fast_flights.exceptions import FlightsNotFound
+
+    query = build_query(legs, trip_type, passengers, seat, currency, max_minutes)
     fetch_cheapest.last_url = query.url()
     try:
         results = get_flights(query)
@@ -219,6 +225,24 @@ def run_checks(cfg, history, force=False):
         max_minutes = int(trip["max_travel_hours"] * 60) if trip.get("max_travel_hours") else None
         print(f"[{trip['id']}] {len(searches)} searches")
 
+        browser = None
+        if trip.get("method") == "browser":
+            from browser_fetch import BrowserFetcher
+            browser = BrowserFetcher()
+
+        def search_once(s, cap):
+            trip_type = "round-trip" if s["kind"] == "return" else "one-way"
+            if browser:
+                url = build_query(s["legs"], trip_type, trip["passengers"], trip["seat"],
+                                  cfg["currency"], cap).url()
+                fetch_cheapest.last_url = url
+                r = browser.fetch(url, f"{s['from']}-{s['to']}_{s['date']}_{s['return_date']}")
+                if r and not r["route"].startswith(s["from"]):
+                    r["route"] = "–".join([s["from"]] + ([r["route"]] if r["route"] else []) + [s["to"]])
+                return r
+            return fetch_cheapest(s["legs"], trip_type, trip["passengers"], trip["seat"],
+                                  cfg["currency"], cap)
+
         for i, s in enumerate(searches):
             if i:
                 time.sleep(random.uniform(*pause))
@@ -230,45 +254,29 @@ def run_checks(cfg, history, force=False):
             result, err = None, None
             for attempt in range(2):
                 try:
-                    result = fetch_cheapest(
-                        s["legs"], "round-trip" if s["kind"] == "return" else "one-way",
-                        trip["passengers"], trip["seat"], cfg["currency"], max_minutes,
-                    )
+                    result = search_once(s, max_minutes)
                     err = None
                     break
                 except Exception as e:  # network errors, blocks, parser changes
                     err = f"{type(e).__name__}: {str(e)[:160]}"
                     time.sleep(10)
+            if result is None and not err and not browser:
+                # Google sometimes returns a page with no results; try once more.
+                time.sleep(random.uniform(*pause))
+                try:
+                    result = search_once(s, max_minutes)
+                except Exception:
+                    result = None
             label = f"{s['from']}-{s['to']} {s['date']}" + (f" / {s['return_date']}" if s["return_date"] else "")
             if err:
                 failed += 1
                 errors.append(f"{label}: {err}")
                 print(f"  FAIL {label}: {err}")
                 continue
-            if result is None and not err:
-                # Google sometimes returns a page with no results; try once more.
-                time.sleep(random.uniform(*pause))
-                try:
-                    result = fetch_cheapest(
-                        s["legs"], "round-trip" if s["kind"] == "return" else "one-way",
-                        trip["passengers"], trip["seat"], cfg["currency"], max_minutes,
-                    )
-                except Exception:
-                    result = None
             if result is None:
                 empty += 1
                 print(f"  none {label}")
                 print(f"       check in a browser: {getattr(fetch_cheapest, 'last_url', '')}")
-                if max_minutes and empty == 1:
-                    try:
-                        test = fetch_cheapest(
-                            s["legs"], "round-trip" if s["kind"] == "return" else "one-way",
-                            trip["passengers"], trip["seat"], cfg["currency"], None,
-                        )
-                        print(f"       without the {trip['max_travel_hours']}h cap: "
-                              + (f"found {test['price']} ({test['airlines']}, {test['route']})" if test else "still none"))
-                    except Exception as e:
-                        print(f"       without the cap: error {type(e).__name__}")
                 continue
             ok += 1
             series = history["series"].setdefault(s["key"], {
@@ -277,6 +285,8 @@ def run_checks(cfg, history, force=False):
             series["obs"].append({"ts": now.isoformat(), **result})
             print(f"  {result['price']:>6} {label} ({result['airlines']})")
 
+        if browser:
+            browser.close()
         history["runs"].append({
             "ts": now.isoformat(), "trip": trip["id"], "searches": len(searches),
             "ok": ok, "empty": empty, "failed": failed, "errors": errors[:10],
