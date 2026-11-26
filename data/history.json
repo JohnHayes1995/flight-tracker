@@ -330,6 +330,16 @@
      "depart": "13:20",
      "flying_minutes": 200,
      "options_seen": 7
+    },
+    {
+     "ts": "2026-11-26T22:04:59.088447+00:00",
+     "price": 627,
+     "airlines": "Virgin Australia",
+     "stops": 0,
+     "route": "ADL–PER",
+     "depart": "13:20",
+     "flying_minutes": 200,
+     "options_seen": 7
     }
    ]
   },
@@ -404,6 +414,16 @@
     },
     {
      "ts": "2026-11-26T11:07:03.307912+00:00",
+     "price": 1206,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "06:00",
+     "flying_minutes": 175,
+     "options_seen": 7
+    },
+    {
+     "ts": "2026-11-26T22:04:59.088447+00:00",
      "price": 1206,
      "airlines": "Jetstar",
      "stops": 0,
@@ -522,6 +542,16 @@
      "depart": "06:00",
      "flying_minutes": 175,
      "options_seen": 7
+    },
+    {
+     "ts": "2026-11-26T22:04:59.088447+00:00",
+     "price": 1206,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "06:00",
+     "flying_minutes": 175,
+     "options_seen": 7
     }
    ]
   },
@@ -623,6 +653,16 @@
      "depart": "16:25",
      "flying_minutes": 175,
      "options_seen": 9
+    },
+    {
+     "ts": "2026-11-26T22:04:59.088447+00:00",
+     "price": 1176,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "16:25",
+     "flying_minutes": 175,
+     "options_seen": 9
     }
    ]
   },
@@ -714,6 +754,16 @@
      "depart": "16:25",
      "flying_minutes": 175,
      "options_seen": 9
+    },
+    {
+     "ts": "2026-11-26T22:04:59.088447+00:00",
+     "price": 1176,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "16:25",
+     "flying_minutes": 175,
+     "options_seen": 9
     }
    ]
   },
@@ -788,6 +838,16 @@
     },
     {
      "ts": "2026-11-26T04:14:32.419050+00:00",
+     "price": 627,
+     "airlines": "Virgin Australia",
+     "stops": 0,
+     "route": "ADL–PER",
+     "depart": "18:20",
+     "flying_minutes": 200,
+     "options_seen": 5
+    },
+    {
+     "ts": "2026-11-26T22:04:59.088447+00:00",
      "price": 627,
      "airlines": "Virgin Australia",
      "stops": 0,
@@ -2273,10 +2333,19 @@
    "empty": 3,
    "failed": 0,
    "errors": []
+  },
+  {
+   "ts": "2026-11-26T22:04:59.088447+00:00",
+   "trip": "adl",
+   "searches": 8,
+   "ok": 6,
+   "empty": 2,
+   "failed": 0,
+   "errors": []
   }
  ],
  "last_checked": {
-  "adl": "2026-11-26T11:07:03.307912+00:00",
+  "adl": "2026-11-26T22:04:59.088447+00:00",
   "bog": "2026-11-26T04:14:32.419050+00:00"
  },
  "trip_started": {
