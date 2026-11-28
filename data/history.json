@@ -239,6 +239,16 @@
      "depart": "16:25",
      "flying_minutes": 175,
      "options_seen": 9
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 548,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "16:25",
+     "flying_minutes": 175,
+     "options_seen": 9
     }
    ]
   },
@@ -390,6 +400,16 @@
      "depart": "13:20",
      "flying_minutes": 200,
      "options_seen": 7
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 627,
+     "airlines": "Virgin Australia",
+     "stops": 0,
+     "route": "ADL–PER",
+     "depart": "13:20",
+     "flying_minutes": 200,
+     "options_seen": 7
     }
    ]
   },
@@ -494,6 +514,16 @@
     },
     {
      "ts": "2026-11-27T22:06:42.013167+00:00",
+     "price": 1206,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "06:00",
+     "flying_minutes": 175,
+     "options_seen": 7
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
      "price": 1206,
      "airlines": "Jetstar",
      "stops": 0,
@@ -783,6 +813,16 @@
      "depart": "16:25",
      "flying_minutes": 175,
      "options_seen": 9
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 1176,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "16:25",
+     "flying_minutes": 175,
+     "options_seen": 9
     }
    ]
   },
@@ -914,6 +954,16 @@
      "depart": "16:25",
      "flying_minutes": 175,
      "options_seen": 9
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 1176,
+     "airlines": "Jetstar",
+     "stops": 0,
+     "route": "PER–ADL",
+     "depart": "16:25",
+     "flying_minutes": 175,
+     "options_seen": 9
     }
    ]
   },
@@ -1025,6 +1075,16 @@
      "depart": "18:20",
      "flying_minutes": 200,
      "options_seen": 5
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 627,
+     "airlines": "Virgin Australia",
+     "stops": 0,
+     "route": "ADL–PER",
+     "depart": "18:20",
+     "flying_minutes": 200,
+     "options_seen": 5
     }
    ]
   },
@@ -1082,6 +1142,18 @@
      "depart": "22:35",
      "flying_minutes": 1870,
      "options_seen": 8,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 6214,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 7,
      "google_level": null,
      "google_typical": null
     }
@@ -1143,6 +1215,18 @@
      "options_seen": 8,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5923,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 7,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -1200,6 +1284,18 @@
      "depart": "22:35",
      "flying_minutes": 1870,
      "options_seen": 4,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5923,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 5,
      "google_level": null,
      "google_typical": null
     }
@@ -1261,6 +1357,18 @@
      "options_seen": 4,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5923,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 5,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -1312,6 +1420,18 @@
     {
      "ts": "2026-11-27T04:18:27.710149+00:00",
      "price": 5346,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 3,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 7328,
      "airlines": "Iberia, Qatar Airways",
      "stops": 2,
      "route": "BOG–MAD–DOH–PER",
@@ -1379,6 +1499,18 @@
      "options_seen": 3,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5443,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 3,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -1436,6 +1568,18 @@
      "depart": "13:15",
      "flying_minutes": 1995,
      "options_seen": 5,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5235,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–MEL–PER",
+     "depart": "13:15",
+     "flying_minutes": 1905,
+     "options_seen": 2,
      "google_level": null,
      "google_typical": null
     }
@@ -1497,6 +1641,18 @@
      "options_seen": 7,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5443,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 8,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -1548,6 +1704,18 @@
     {
      "ts": "2026-11-27T04:18:27.710149+00:00",
      "price": 5136,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 7,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5229,
      "airlines": "Iberia, Qatar Airways",
      "stops": 2,
      "route": "BOG–MAD–DOH–PER",
@@ -1615,6 +1783,18 @@
      "options_seen": 7,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5229,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 8,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -1666,6 +1846,18 @@
     {
      "ts": "2026-11-27T04:18:27.710149+00:00",
      "price": 4967,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 6,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5058,
      "airlines": "Iberia, Qatar Airways",
      "stops": 2,
      "route": "BOG–MAD–DOH–PER",
@@ -1733,6 +1925,18 @@
      "options_seen": 6,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5058,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 7,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -1784,6 +1988,18 @@
     {
      "ts": "2026-11-27T04:18:27.710149+00:00",
      "price": 4967,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 4,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5229,
      "airlines": "Iberia, Qatar Airways",
      "stops": 2,
      "route": "BOG–MAD–DOH–PER",
@@ -1851,6 +2067,18 @@
      "options_seen": 5,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5058,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 5,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -1908,6 +2136,18 @@
      "depart": "23:10",
      "flying_minutes": 2015,
      "options_seen": 7,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 4161,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–SYD–PER",
+     "depart": "13:15",
+     "flying_minutes": 2055,
+     "options_seen": 8,
      "google_level": null,
      "google_typical": null
     }
@@ -1969,6 +2209,18 @@
      "options_seen": 5,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 3325,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–MEL–PER",
+     "depart": "13:15",
+     "flying_minutes": 1885,
+     "options_seen": 2,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -2026,6 +2278,18 @@
      "depart": "22:35",
      "flying_minutes": 1870,
      "options_seen": 7,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5058,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 6,
      "google_level": null,
      "google_typical": null
     }
@@ -2087,6 +2351,18 @@
      "options_seen": 3,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 4245,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–MEL–PER",
+     "depart": "13:15",
+     "flying_minutes": 1900,
+     "options_seen": 2,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -2144,6 +2420,18 @@
      "depart": "13:15",
      "flying_minutes": 1995,
      "options_seen": 4,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5058,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 3,
      "google_level": null,
      "google_typical": null
     }
@@ -2205,6 +2493,18 @@
      "options_seen": 6,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 6214,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 3,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -2264,6 +2564,18 @@
      "options_seen": 8,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5025,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–SYD–PER",
+     "depart": "23:10",
+     "flying_minutes": 2015,
+     "options_seen": 8,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -2315,6 +2627,18 @@
     {
      "ts": "2026-11-27T04:18:27.710149+00:00",
      "price": 4954,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–SYD–PER",
+     "depart": "23:10",
+     "flying_minutes": 2015,
+     "options_seen": 7,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5042,
      "airlines": "LATAM, Qantas",
      "stops": 2,
      "route": "BOG–SCL–SYD–PER",
@@ -2382,6 +2706,18 @@
      "options_seen": 5,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5443,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 7,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -2433,6 +2769,18 @@
     {
      "ts": "2026-11-27T04:18:27.710149+00:00",
      "price": 4967,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 6,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5058,
      "airlines": "Iberia, Qatar Airways",
      "stops": 2,
      "route": "BOG–MAD–DOH–PER",
@@ -2500,6 +2848,18 @@
      "options_seen": 3,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 3993,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–SYD–PER",
+     "depart": "13:15",
+     "flying_minutes": 2055,
+     "options_seen": 3,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -2551,6 +2911,18 @@
     {
      "ts": "2026-11-27T04:18:27.710149+00:00",
      "price": 4967,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 3,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5058,
      "airlines": "Iberia, Qatar Airways",
      "stops": 2,
      "route": "BOG–MAD–DOH–PER",
@@ -2618,6 +2990,18 @@
      "options_seen": 6,
      "google_level": null,
      "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 5443,
+     "airlines": "Iberia, Qatar Airways",
+     "stops": 2,
+     "route": "BOG–MAD–DOH–PER",
+     "depart": "22:35",
+     "flying_minutes": 1870,
+     "options_seen": 4,
+     "google_level": null,
+     "google_typical": null
     }
    ]
   },
@@ -2675,6 +3059,18 @@
      "depart": "13:15",
      "flying_minutes": 1995,
      "options_seen": 6,
+     "google_level": null,
+     "google_typical": null
+    },
+    {
+     "ts": "2026-11-28T04:06:34.261728+00:00",
+     "price": 3892,
+     "airlines": "LATAM, Qantas",
+     "stops": 2,
+     "route": "BOG–SCL–MEL–PER",
+     "depart": "13:15",
+     "flying_minutes": 1900,
+     "options_seen": 2,
      "google_level": null,
      "google_typical": null
     }
@@ -2895,17 +3291,35 @@
    "empty": 3,
    "failed": 0,
    "errors": []
+  },
+  {
+   "ts": "2026-11-28T04:06:34.261728+00:00",
+   "trip": "adl",
+   "searches": 8,
+   "ok": 6,
+   "empty": 2,
+   "failed": 0,
+   "errors": []
+  },
+  {
+   "ts": "2026-11-28T04:06:34.261728+00:00",
+   "trip": "bog",
+   "searches": 28,
+   "ok": 28,
+   "empty": 0,
+   "failed": 0,
+   "errors": []
   }
  ],
  "last_checked": {
-  "adl": "2026-11-27T22:06:42.013167+00:00",
-  "bog": "2026-11-27T04:18:27.710149+00:00"
+  "adl": "2026-11-28T04:06:34.261728+00:00",
+  "bog": "2026-11-28T04:06:34.261728+00:00"
  },
  "trip_started": {
   "adl": "2026-11-24T12:37:00.414026+00:00",
   "bog": "2026-11-24T13:09:16.417013+00:00"
  },
  "api_usage": {
-  "2026-11": 112
+  "2026-11": 140
  }
 }
